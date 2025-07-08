@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 
+// Schema for the Post entity which has a user reference and content
+// user is a reference to the User model and is required
 const postSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,

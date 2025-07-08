@@ -1,6 +1,6 @@
 const Post = require('../models/Post');
 
-// Create Post
+// Create the Post script
 exports.createPost = async (req, res) => {
   try {
     const { userId, content } = req.body;

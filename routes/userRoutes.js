@@ -1,5 +1,7 @@
 const express = require('express');
 const router = express.Router();
+// Importing the user controller functions
+// These functions handle the logic for creating, retrieving, updating, and deleting users
 const {
   createUser,
   getUsers,
