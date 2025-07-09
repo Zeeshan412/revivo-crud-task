@@ -64,6 +64,7 @@ const Dashboard = () => {
     navigate('/login');
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     fetchPosts();
     fetchUser();
@@ -72,9 +73,11 @@ const Dashboard = () => {
   return (
     <div style={{ padding: '30px', maxWidth: '600px', margin: 'auto' }}>
       <h2>Welcome to the Dashboard</h2>
-      <button onClick={logout} style={{ float: 'right', marginBottom: '20px' }}>
-        Logout
-      </button>
+
+      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
+        <button onClick={logout}>Logout</button>
+        <button onClick={() => navigate('/profile')}>View Profile</button>
+      </div>
 
       <form onSubmit={handlePost} style={{ marginBottom: '30px' }}>
         <input
@@ -90,6 +93,8 @@ const Dashboard = () => {
       </form>
 
       <h3>All Posts</h3>
+      <p>Total Posts: {posts.length}</p>
+
       {posts.length === 0 ? (
         <p>No posts available.</p>
       ) : (
@@ -120,7 +125,7 @@ const Dashboard = () => {
             </li>
           ))}
         </ul>
-      )}
+      )}  
     </div>
   );
 };

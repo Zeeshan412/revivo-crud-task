@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import Register from './Register';
 import Login from './Login';
 import Dashboard from './Dashboard';
+import Profile from './Profile'; // ✅ Import Profile component
 
 function App() {
   const [token, setToken] = useState(localStorage.getItem('token'));
@@ -21,10 +22,17 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Register />} />
-        <Route path="/login" element={<Login onLogin={() => setToken(localStorage.getItem('token'))} />} />
+        <Route
+          path="/login"
+          element={<Login onLogin={() => setToken(localStorage.getItem('token'))} />}
+        />
         <Route
           path="/dashboard"
           element={token ? <Dashboard /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/profile"
+          element={token ? <Profile /> : <Navigate to="/login" />} // ✅ New Route
         />
       </Routes>
     </Router>
