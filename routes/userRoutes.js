@@ -1,17 +1,10 @@
 const express = require('express');
 const router = express.Router();
-// Importing the user controller functions
-// These functions handle the logic for creating, retrieving, updating, and deleting users
-const {
-  createUser,
-  getUsers,
-  updateUser,
-  deleteUser
-} = require('../controllers/userController');
+const { createUser, getUsers, updateUser, deleteUser } = require('../controllers/userController');
 
-router.post('/', createUser);
-router.get('/', getUsers);
-router.put('/:id', updateUser);
-router.delete('/:id', deleteUser);
+router.post('/', createUser);         // POST /api/users
+router.get('/', getUsers);            // GET /api/users
+router.put('/:id', updateUser);       // PUT /api/users/:id
+router.delete('/:id', deleteUser);    // DELETE /api/users/:id
 
 module.exports = router;

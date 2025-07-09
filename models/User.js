@@ -12,6 +12,10 @@ const userSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-});
+  password: {   // password is a string and is required
+    type: String,
+    required: true,
+  },
+}, { timestamps: true }); // timestamps will automatically add createdAt and updatedAt fields
 
 module.exports = mongoose.model('User', userSchema);

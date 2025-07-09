@@ -1,73 +1,33 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import Register from './Register';
+import Login from './Login';
+import Dashboard from './Dashboard';
 
 function App() {
-  const [users, setUsers] = useState([]);
-  const [form, setForm] = useState({ name: '', email: '' });
+  const [token, setToken] = useState(localStorage.getItem('token'));
 
-  // Fetch all users
-  const fetchUsers = async () => {
-    const res = await axios.get('/api/users');
-    setUsers(res.data);
-  };
-
+  // Update token on localStorage change (optional enhancement)
   useEffect(() => {
-    fetchUsers();
+    const handleStorageChange = () => {
+      setToken(localStorage.getItem('token'));
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
   }, []);
 
-  // Handle form input
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
-
-  // Create user
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    await axios.post('/api/users', form);
-    setForm({ name: '', email: '' });
-    fetchUsers();
-  };
-
-  // Delete user
-  const handleDelete = async (id) => {
-    await axios.delete(`/api/users/${id}`);
-    fetchUsers();
-  };
-
   return (
-    <div style={{ padding: '30px' }}>
-      <h2>Revivo User Management</h2>
-
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="name"
-          placeholder="Name"
-          value={form.name}
-          onChange={handleChange}
-          required
+    <Router>
+      <Routes>
+        <Route path="/" element={<Register />} />
+        <Route path="/login" element={<Login onLogin={() => setToken(localStorage.getItem('token'))} />} />
+        <Route
+          path="/dashboard"
+          element={token ? <Dashboard /> : <Navigate to="/login" />}
         />
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={form.email}
-          onChange={handleChange}
-          required
-        />
-        <button type="submit">Add User</button>
-      </form>
-
-      <h3>User List</h3>
-      <ul>
-        {users.map((user) => (
-          <li key={user._id}>
-            {user.name} ({user.email})
-            <button onClick={() => handleDelete(user._id)}>Delete</button>
-          </li>
-        ))}
-      </ul>
-    </div>
+      </Routes>
+    </Router>
   );
 }
 

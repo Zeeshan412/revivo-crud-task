@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
-// Importing the post controller functions
-// These functions handle the logic for creating posts
-const { createPost } = require('../controllers/postController');
+const { createPost, getPosts, deletePost } = require('../controllers/postController');
+const { protect } = require('../middleware/authMiddleware');
 
-router.post('/', createPost);
+router.post('/', protect, createPost);
+router.get('/', protect, getPosts);
+router.delete('/:id', protect, deletePost); // dynamic route for deleting specific post
 
 module.exports = router;

@@ -1,9 +1,8 @@
 const mongoose = require('mongoose');
 
-// Schema for the Post entity which has a user reference and content
-// user is a reference to the User model and is required
+// Schema for the Post entity: each post is linked to a user (createdBy) and has content
 const postSchema = new mongoose.Schema({
-  user: {
+  createdBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true,
